@@ -1,0 +1,208 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+ 
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: #1a1206;
+    color: #f5edd8;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+ 
+/* Vertical line texture — same as home header */
+.bg-texture {
+    position: fixed;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.015) 0px,
+        rgba(255, 255, 255, 0.015) 1px,
+        transparent 1px,
+        transparent 48px
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+ 
+/* Warm glow behind the card */
+body::before {
+    content: '';
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle, rgba(200, 151, 74, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+ 
+/* ── Page layout ── */
+.page-wrap {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    padding: 2rem 1rem;
+}
+ 
+/* ── Brand logo ── */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+ 
+.logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #f5edd8;
+    letter-spacing: -0.3px;
+}
+ 
+.logo-books {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 30px;
+}
+ 
+.logo-books span {
+    display: block;
+    width: 5px;
+    background: #c8974a;
+    border-radius: 2px 2px 0 0;
+}
+ 
+.logo-books span:nth-child(1) { height: 14px; }
+.logo-books span:nth-child(2) { height: 22px; }
+.logo-books span:nth-child(3) { height: 17px; }
+.logo-books span:nth-child(4) { height: 26px; }
+ 
+/* ── Card ── */
+.card {
+    background: #221a0d;
+    border: 0.5px solid rgba(200, 151, 74, 0.2);
+    border-radius: 14px;
+    padding: 2.2rem 2rem;
+    width: 100%;
+    max-width: 360px;
+}
+ 
+.card h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #f5edd8;
+    margin-bottom: 4px;
+}
+ 
+.card-sub {
+    font-size: 14px;
+    color: #c8b89a;
+    margin-bottom: 1.8rem;
+}
+ 
+/* ── Fields ── */
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 1rem;
+}
+ 
+.field label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #c8b89a;
+    letter-spacing: 0.2px;
+}
+ 
+.field input {
+    width: 100%;
+    padding: 10px 14px;
+    background: #1a1206;
+    border: 0.5px solid rgba(200, 151, 74, 0.25);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: #f5edd8;
+    outline: none;
+    transition: border-color 0.15s;
+}
+ 
+.field input::placeholder {
+    color: rgba(200, 184, 154, 0.4);
+}
+ 
+.field input:focus {
+    border-color: rgba(200, 151, 74, 0.6);
+}
+ 
+/* ── Button ── */
+button {
+    width: 100%;
+    padding: 11px;
+    margin-top: 0.6rem;
+    background: #c8974a;
+    color: #1a1206;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.2px;
+    transition: background 0.15s, transform 0.1s;
+}
+ 
+button:hover {
+    background: #d9a85a;
+}
+ 
+button:active {
+    transform: scale(0.98);
+}
+ 
+/* ── Footer link ── */
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 1.4rem;
+    font-size: 13px;
+    color: #c8b89a;
+}
+ 
+.card-footer a {
+    color: #c8974a;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+ 
+.card-footer a:hover {
+    color: #d9a85a;
+    text-decoration: underline;
+}
+ 
+/* ── Responsive ── */
+@media (max-width: 420px) {
+    .card {
+        padding: 1.8rem 1.4rem;
+    }
+}

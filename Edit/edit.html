@@ -1,0 +1,102 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheLibrary — Edit Book</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="edit.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+
+    <header id="header">
+        <a class="header-logo" href="../Admin/admin.html">
+            <div class="logo-books">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <span class="logo-text">TheLibrary</span>
+        </a>
+        <div class="header-user">
+            <div class="user-avatar" id="userAvatar"></div>
+            <div class="user-info">
+                <span class="user-greeting">Xin chào,</span>
+                <strong class="user-name" id="currentName"></strong>
+            </div>
+            <div class="header-divider"></div>
+            <button id="logout_btn">Sign out</button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <button class="back-btn" onclick="history.back()">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 12L6 8l4-4"/>
+            </svg>
+            Back to products
+        </button>
+
+        <div class="form-card">
+            <div class="form-header">
+                <h1 class="form-title">Edit Book</h1>
+                <p class="form-subtitle">Update the details below and save your changes.</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="image-input">Cover Image URL</label>
+                <img id="image-preview" class="image-preview" src="" alt="Preview">
+                <input type="text" id="image-input" class="form-input" placeholder="https://…">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="name-input">Title</label>
+                    <input type="text" id="name-input" class="form-input" placeholder="Book title">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="category-input">Category</label>
+                    <input type="text" id="category-input" class="form-input" placeholder="e.g. Fiction">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="price-input">Price</label>
+                <div class="price-wrapper">
+                    <input type="number" id="price-input" class="form-input" placeholder="0">
+                    <span class="price-suffix">.000₫</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="about-input">Description</label>
+                <textarea id="about-input" class="form-textarea" placeholder="About this book…" rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="pdf-input">Trích ảnh từ file PDF (tùy chọn)</label>
+                <input type="file" id="pdf-input" class="form-input" accept="application/pdf">
+                <button type="button" id="extract-pdf-btn" class="submit-btn" style="margin-top:8px; background: var(--gold); color: var(--ink);">
+                    Trích xuất ảnh từ PDF
+                </button>
+                <p id="pdf-status" style="font-size:12px; color: var(--ink-muted); margin-top:6px;"></p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="pdflink-input">Link PDF sách (để đọc online)</label>
+                <input type="text" id="pdflink-input" class="form-input" placeholder="https://…link-file-pdf">
+                <p style="font-size:12px; color: var(--ink-muted); margin-top:6px;">Nếu có link PDF, nút "Đọc sách online" ở trang chi tiết sẽ mở link này ở tab mới.</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="content-input">Nội dung sách (để đọc online)</label>
+                <textarea id="content-input" class="form-textarea" placeholder="Dán toàn bộ nội dung sách vào đây. Mỗi đoạn văn xuống dòng riêng. Để chèn ảnh minh họa, viết một dòng riêng dạng: [img:https://link-anh.jpg]. Hoặc upload PDF ở trên để ảnh tự động được thêm vào đây." rows="8" style="min-height: 200px;"></textarea>
+            </div>
+
+            <button class="submit-btn detail-buy-btn">Save Changes</button>
+        </div>
+    </main>
+
+    <script type="module" src="edit.js"></script>
+</body>
+</html>

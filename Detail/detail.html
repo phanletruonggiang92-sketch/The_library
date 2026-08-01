@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheLibrary – Product Detail</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="detail.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+    <header id="header">
+        <a class="header-logo" href="../Home/index.html">
+            <div class="logo-books">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <span class="logo-text">TheLibrary</span>
+        </a>
+
+        <div class="header-user">
+            <div class="user-avatar" id="userAvatar"></div>
+            <div class="user-info">
+                <span class="user-greeting">Xin chào,</span>
+                <strong class="user-name" id="currentName"></strong>
+            </div>
+            <div class="header-divider"></div>
+            <button id="logout_btn">Đăng xuất</button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <button class="back-btn" onclick="history.back()">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 12L6 8l4-4"/>
+            </svg>
+            Back to products
+        </button>
+
+        <div id="container"></div>
+        
+    </main>
+
+    <script src="detail.js" type="module"></script>
+</body>
+</html>

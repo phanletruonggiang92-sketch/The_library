@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --ink: #16120d;
+    --ink-soft: #3d3228;
+    --ink-muted: #8a7a69;
+    --parchment: #f7f2ea;
+    --parchment-dark: #ede5d8;
+    --gold: #b8893a;
+    --gold-light: #d4a85a;
+    --gold-pale: #f5e8cc;
+    --surface: #ffffff;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--parchment);
+    color: var(--ink);
+    min-height: 100vh;
+}
+
+/* ── Header ── */
+#header {
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(184,137,58,0.2);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #f0e8d8;
+    letter-spacing: 0.5px;
+}
+
+.logo-books {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 26px;
+}
+
+.logo-books span {
+    display: block;
+    width: 4px;
+    background: var(--gold);
+    border-radius: 1px 1px 0 0;
+}
+
+.logo-books span:nth-child(1) { height: 13px; }
+.logo-books span:nth-child(2) { height: 20px; }
+.logo-books span:nth-child(3) { height: 16px; }
+.logo-books span:nth-child(4) { height: 24px; }
+
+.header-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+}
+
+.user-info { display: flex; flex-direction: column; gap: 1px; }
+.user-greeting { font-size: 11px; color: #6a5e52; line-height: 1; }
+.user-name { font-size: 14px; font-weight: 500; color: #f0e8d8; line-height: 1.2; }
+
+.header-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255,255,255,0.1);
+}
+
+#logout_btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: #8a7a69;
+    background: transparent;
+    border: 1px solid rgba(138,122,105,0.25);
+    border-radius: 6px;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+#logout_btn:hover {
+    color: #f0e8d8;
+    border-color: rgba(240,232,216,0.2);
+    background: rgba(255,255,255,0.05);
+}
+
+/* ── Main ── */
+#main-content {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+/* ── Back button ── */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 2rem;
+    transition: color 0.15s;
+    letter-spacing: 0.2px;
+}
+
+.back-btn:hover { color: var(--ink); }
+
+.back-btn svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* ── Form card ── */
+.form-card {
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--parchment-dark);
+    padding: 2.5rem;
+    animation: fadeUp 0.3s ease both;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.form-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--parchment-dark);
+}
+
+.form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+}
+
+.form-subtitle {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+}
+
+/* ── Form fields ── */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    background: var(--parchment);
+    border: 1px solid var(--parchment-dark);
+    border-radius: 8px;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    border-color: var(--gold);
+    background: #fff;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: #c0b4a4;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+}
+
+/* Price input with prefix */
+.price-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.price-wrapper .form-input {
+    padding-right: 60px;
+}
+
+.price-suffix {
+    position: absolute;
+    right: 12px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    pointer-events: none;
+}
+
+/* Image preview */
+.image-preview {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+    background: var(--parchment-dark);
+    object-fit: cover;
+    display: block;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--parchment-dark);
+}
+
+.image-preview[src=""] { display: none; }
+
+/* ── Submit button ── */
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: var(--ink);
+    color: #f0e8d8;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.3px;
+}
+
+.submit-btn:hover {
+    background: var(--ink-soft);
+    transform: translateY(-1px);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* ── Two-column layout ── */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 500px) {
+    #header { padding: 0 1rem; }
+    .user-info { display: none; }
+    .form-card { padding: 1.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+}

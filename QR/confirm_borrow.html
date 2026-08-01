@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TheLibrary – Xác nhận mượn sách</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: 'DM Sans', sans-serif;
+        background: #f5f0e8;
+        color: #1a1206;
+        min-height: 100vh;
+        display: flex; align-items: center; justify-content: center;
+        padding: 1.5rem;
+    }
+    .confirm-box {
+        background: #fff; border-radius: 16px; padding: 2rem;
+        max-width: 380px; width: 100%; text-align: center;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .confirm-icon {
+        width: 56px; height: 56px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 1rem; font-size: 26px;
+    }
+    .confirm-icon.loading  { background: #faf3e6; color: #c8974a; }
+    .confirm-icon.success  { background: #e8f8f0; color: #1e8a4a; }
+    .confirm-icon.error    { background: #fdecea; color: #c0392b; }
+    h1 {
+        font-family: 'Playfair Display', serif; font-size: 20px;
+        font-weight: 600; margin-bottom: 0.5rem;
+    }
+    p { font-size: 13.5px; color: #7a6040; line-height: 1.6; }
+    p strong { color: #1a1206; }
+    .spinner {
+        width: 22px; height: 22px; border-radius: 50%;
+        border: 3px solid rgba(200,151,74,0.25); border-top-color: #c8974a;
+        animation: spin 0.8s linear infinite; margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+    <div class="confirm-box">
+        <div class="confirm-icon loading" id="statusIcon"><div class="spinner"></div></div>
+        <h1 id="statusTitle">Đang gửi email xác nhận…</h1>
+        <p id="statusText">Vui lòng chờ trong giây lát.</p>
+    </div>
+
+    <script>
+        // ── Cấu hình EmailJS ──
+        // Lấy 3 giá trị này trong dashboard tại https://www.emailjs.com/
+        //   1) Public Key : Account > General
+        //   2) Service ID : Email Services > (service của bạn)
+        //   3) Template ID: Email Templates > (template của bạn)
+        const EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";
+        const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
+        const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+        const iconEl  = document.getElementById("statusIcon");
+        const titleEl = document.getElementById("statusTitle");
+        const textEl  = document.getElementById("statusText");
+
+        function setStatus(kind, title, text) {
+            iconEl.className = "confirm-icon " + kind;
+            iconEl.innerHTML = kind === "success" ? "✓" : kind === "error" ? "✕" : '<div class="spinner"></div>';
+            titleEl.textContent = title;
+            textEl.innerHTML = text;
+        }
+
+        // ── Đọc thông tin từ query string (được gắn vào link QR trong detail.js) ──
+        const params  = new URLSearchParams(location.search);
+        const email   = params.get("email")  || "";
+        const book    = params.get("book")   || "";
+        const bookId  = params.get("bookId") || "";
+        const user    = params.get("user")   || "";
+
+        if (!email) {
+            setStatus("error", "Thiếu thông tin", "Không tìm thấy địa chỉ email trong đường dẫn.");
+        } else {
+            // Các biến này cần khớp với tên biến trong Email Template trên EmailJS
+            // (ví dụ: {{to_email}}, {{book_name}}, {{user_name}}, {{book_id}})
+            const templateParams = {
+                to_email:  email,
+                book_name: book,
+                book_id:   bookId,
+                user_name: user,
+            };
+
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+                .then(() => {
+                    setStatus(
+                        "success",
+                        "Đã gửi email xác nhận!",
+                        `Email xác nhận mượn sách "<strong>${book}</strong>" đã được gửi tới <strong>${email}</strong>.`
+                    );
+                })
+                .catch((err) => {
+                    console.error("Lỗi khi gửi email qua EmailJS:", err);
+                    setStatus(
+                        "error",
+                        "Gửi email thất bại",
+                        "Có lỗi xảy ra khi gửi email xác nhận. Vui lòng thử lại sau."
+                    );
+                });
+        }
+    </script>
+
+</body>
+</html>

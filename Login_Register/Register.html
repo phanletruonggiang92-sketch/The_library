@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TheLibrary — Đăng ký</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+ 
+    <div class="bg-texture"></div>
+ 
+    <div class="page-wrap">
+ 
+        <!-- Brand -->
+        <div class="brand">
+            <div class="logo-books">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <span class="logo-text">TheLibrary</span>
+        </div>
+ 
+        <!-- Register card -->
+        <div class="card">
+            <h1>Đăng ký</h1>
+            <p class="card-sub">Tạo tài khoản mới</p>
+ 
+            <div class="field">
+                <label for="username_input_register">Email</label>
+                <input type="text" id="username_input_register" placeholder="you@example.com" />
+            </div>
+ 
+            <div class="field">
+                <label for="password_input_register">Mật khẩu</label>
+                <input type="password" id="password_input_register" placeholder="••••••••" />
+            </div>
+ 
+            <button id="register_btn">Đăng ký</button>
+ 
+            <div class="card-footer">
+                <span>Đã có tài khoản?</span>
+                <a id="goLogin">Đăng nhập ngay</a>
+            </div>
+        </div>
+ 
+    </div>
+ 
+    <script type="module" src="./Register.js"></script>
+</body>
+</html>

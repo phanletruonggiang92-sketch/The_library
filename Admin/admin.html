@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheLibrary — Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <header id="header">
+        <div class="header-logo">
+            <div class="logo-books">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <span class="logo-text">TheLibrary</span>
+        </div>
+        <div class="search">
+            <i class="ti ti-search search-icon" aria-hidden="true"></i>
+            <input type="text" id="input" placeholder="Search books, authors, categories…">
+            <button id="getInputValue">Search</button>
+        </div>
+        <div class="header-user">
+            <div class="user-avatar" id="userAvatar"></div>
+            <div class="user-info">
+                <span class="user-greeting">Xin chào,</span>
+                <strong class="user-name" id="currentName"></strong>
+            </div>
+            <div class="header-divider"></div>
+            <button id="add_btn">+ Add Book</button>
+            <button id="logout_btn">Sign out</button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <div class="container"></div>
+    </main>
+
+    <script src="admin.js" type="module"></script>
+</body>
+</html>
