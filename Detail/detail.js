@@ -25,46 +25,33 @@ const database = getDatabase(app);
 // Số ngày mượn tối đa cho mỗi cuốn sách.
 const BORROW_DURATION_MS = 30 * 24 * 60 * 60 * 1000; // 30 ngày
 
-// ── Cấu hình EmailJS (điền tại đây) ──
-// Lấy 3 giá trị này trong dashboard tại https://dashboard.emailjs.com/
-const EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";
-const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMMPLATE_ID";
+// ── Gửi thông báo qua mailto: (không cần tài khoản/API key bên thứ ba) ──
+// Gmail sẽ NHẬN thông báo mỗi khi có người bấm "Borrow".
+const NOTIFY_EMAIL = "phanletruonggiang92@gmail.com";
 
-// Gmail sẽ NHẬN thông báo mỗi khi có người bấm "Borrow" (điền vào đây bằng code).
-const NOTIFY_EMAIL = "phanletruonggiang92@gmail.com"; // <-- TODO: điền địa chỉ Gmail của bạn vào đây
+// Dựng link mailto: kèm tên sách, người mượn và link ảnh QR thanh toán.
+// Lưu ý: mailto: không thể tự đính kèm file — trình duyệt/hệ điều hành không
+// cho phép JS làm việc này vì lý do bảo mật. Thay vào đó ta gửi kèm ĐƯỜNG DẪN
+// tới ảnh QR (payment-qr.jpg, cùng thư mục với detail.html) để người nhận bấm
+// vào xem/tải ảnh trực tiếp.
+function buildBorrowMailto(prod) {
+    const qrImageUrl = new URL("payment-qr.jpg", location.href).toString();
 
-if (typeof emailjs !== "undefined" && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
-    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-}
+    const subject = `Xác nhận mượn sách: ${prod.name || ""}`;
+    const bodyLines = [
+        `Sách: ${prod.name || ""}`,
+        `Mã sách: ${prod.id != null ? String(prod.id) : (prod._fbKey || "")}`,
+        `Người mượn: ${currentName || ""}`,
+        `Giá: ${prod.price != null ? prod.price + ".000đ" : ""}`,
+        "",
+        "Ảnh QR thanh toán (bấm để xem):",
+        qrImageUrl,
+    ];
+    const body = bodyLines.join("\n");
 
-// Gửi email thông báo mượn sách kèm ảnh QR thanh toán tới NOTIFY_EMAIL.
-// EmailJS chỉ gửi được ảnh nếu template có field ảnh (attachment) hoặc bạn
-// nhúng ảnh này online sẵn trong template — an toàn nhất là để URL ảnh
-// (qr_image_url) trong template email và trỏ nó tới ảnh đã host của bạn.
-async function sendBorrowNotificationEmail(prod) {
-    if (typeof emailjs === "undefined") {
-        console.error("EmailJS chưa được tải (kiểm tra thẻ <script> trong detail.html).");
-        return;
-    }
-    if (!NOTIFY_EMAIL) {
-        console.warn("Chưa điền NOTIFY_EMAIL trong detail.js — bỏ qua gửi email.");
-        return;
-    }
-
-    const templateParams = {
-        to_email: NOTIFY_EMAIL,
-        book_name: prod.name || "",
-        book_id: prod.id != null ? String(prod.id) : "",
-        user_name: currentName || "",
-        qr_image_url: new URL("payment-qr.jpg", location.href).toString(),
-    };
-
-    try {
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
-    } catch (err) {
-        console.error("Lỗi khi gửi email thông báo mượn sách:", err);
-    }
+    return `mailto:${encodeURIComponent(NOTIFY_EMAIL)}` +
+        `?subject=${encodeURIComponent(subject)}` +
+        `&body=${encodeURIComponent(body)}`;
 }
 
 // ── Auth & Header ──
@@ -149,6 +136,12 @@ function ensureQRModal() {
             <h3>Thanh toán mượn sách</h3>
             <p class="qr-modal-sub" id="qr-modal-sub"></p>
             <div id="qr-canvas-wrap"></div>
+            <a id="qr-modal-mailto" href="#" target="_blank" rel="noopener"
+               style="display:block; margin-top:1rem; padding:11px; border-radius:8px;
+                      background:#c8974a; color:#fff; font-weight:600; font-size:13.5px;
+                      text-decoration:none; letter-spacing:0.2px;">
+                📧 Gửi email xác nhận
+            </a>
         </div>
     `;
     document.body.appendChild(modal);
@@ -166,16 +159,19 @@ function ensureQRModal() {
 function showBorrowQRCode(prod) {
     const modal = ensureQRModal();
     modal.querySelector("#qr-modal-sub").innerHTML =
-        `Quét mã bên dưới để thanh toán mượn sách "<strong>${prod.name}</strong>". Một email thông báo sẽ được gửi đi.`;
+        `Quét mã bên dưới để thanh toán mượn sách "<strong>${prod.name}</strong>". Sau đó bấm nút bên dưới để gửi email xác nhận kèm ảnh QR.`;
 
     // Hiện ảnh QR thanh toán tĩnh (đặt file payment-qr.jpg cùng thư mục với detail.html).
     const wrap = modal.querySelector("#qr-canvas-wrap");
     wrap.innerHTML = `<img src="payment-qr.jpg" alt="Mã QR thanh toán" style="max-width:220px;width:100%;border-radius:8px;">`;
 
-    modal.classList.add("show");
+    // Nút gửi email: mở sẵn trình soạn mail của người dùng (Gmail, Outlook, v.v.)
+    // với người nhận, tiêu đề và nội dung (kèm link ảnh QR) đã điền sẵn.
+    // Người dùng chỉ cần bấm "Gửi" trong ứng dụng mail của họ.
+    const mailtoLink = modal.querySelector("#qr-modal-mailto");
+    if (mailtoLink) mailtoLink.href = buildBorrowMailto(prod);
 
-    // Gửi email thông báo (tới Gmail cấu hình ở NOTIFY_EMAIL) khi modal hiện ra.
-    sendBorrowNotificationEmail(prod);
+    modal.classList.add("show");
 }
 
 // ── Product Detail ──
