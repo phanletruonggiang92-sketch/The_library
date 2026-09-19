@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheLibrary – Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="premium.css">
+</head>
+<body>
+
+    <header id="header">
+        <a class="header-logo" href="../Home/index.html">
+            <div class="logo-books">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <span class="logo-text">TheLibrary</span>
+        </a>
+
+        <div class="header-user">
+            <div class="user-avatar" id="userAvatar"></div>
+            <div class="user-info">
+                <span class="user-greeting">Xin chào,</span>
+                <strong class="user-name" id="currentName"></strong>
+            </div>
+            <div class="header-divider"></div>
+            <button id="logout_btn">Đăng xuất</button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <a class="back-btn" href="../Home/index.html">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 12L6 8l4-4"/>
+            </svg>
+            Về trang chủ
+        </a>
+
+        <div id="premium-status" class="status-card" hidden></div>
+
+        <section class="premium-layout">
+            <!-- Gói Premium -->
+            <div class="plan-card">
+                <h1 class="plan-name">👑 Premium</h1>
+                <p class="plan-tagline">Mượn thoải mái, không tính phí từng cuốn.</p>
+
+                <div class="plan-price">
+                    <strong>30.000₫</strong>
+                    <span>/ tháng</span>
+                </div>
+
+                <ul class="plan-perks">
+                    <li>Mượn không giới hạn số cuốn, miễn phí 3.000₫/cuốn</li>
+                    <li>Đọc online mọi cuốn có file PDF</li>
+                    <li>Mỗi lượt mượn 30 ngày, tối đa đến khi hết hạn Premium</li>
+                    <li>Gia hạn bất cứ lúc nào, thời gian được cộng dồn</li>
+                </ul>
+
+                <button class="btn-premium" id="btn-upgrade">Nâng cấp Premium – 30.000₫</button>
+                <div class="cart-toast" id="cart-toast"></div>
+            </div>
+
+            <!-- So sánh -->
+            <div class="compare-card">
+                <h2 class="section-title">Nên chọn gói nào?</h2>
+                <table class="compare-table">
+                    <thead>
+                        <tr><th></th><th>Thường</th><th class="col-premium">Premium</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Phí mượn</td><td>3.000₫ / cuốn</td><td class="col-premium">Miễn phí</td></tr>
+                        <tr><td>Mượn 5 cuốn</td><td>15.000₫</td><td class="col-premium">30.000₫</td></tr>
+                        <tr><td>Mượn 10 cuốn</td><td>30.000₫</td><td class="col-premium">30.000₫</td></tr>
+                        <tr><td>Mượn 20 cuốn</td><td>60.000₫</td><td class="col-premium">30.000₫</td></tr>
+                    </tbody>
+                </table>
+                <p class="compare-note">Nếu mỗi tháng bạn mượn hơn 10 cuốn, Premium sẽ rẻ hơn.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="premium.js" type="module"></script>
+</body>
+</html>
